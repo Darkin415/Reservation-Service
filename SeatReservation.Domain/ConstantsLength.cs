@@ -4,6 +4,6 @@ public readonly struct ConstantsLength
 {
     public const int LENGTH500 = 500;
 
-    public const int LENGTH50 = 50;
+    public const int LENGTH50 = 50; 
 }
 

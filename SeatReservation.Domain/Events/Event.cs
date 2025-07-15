@@ -39,11 +39,28 @@ public class Event
 
     public EventDetails Details { get; set; }
 
+    public EventType Type { get; private set; }
     public VenueId VenueId { get; set; }   
+    
+    public IEventInfo Info {get; private set;}
 
+    public interface IEventInfo { }
     public string Name { get; set; }    
 
-    public DateTime EventDate { get; set; } 
+    public DateTime EventDate { get; set; }
+
+    public enum EventType
+    {
+        Concert,
+        Conference,
+        Online
+    }
+    
+    public record ConcertInfo(string Performer): IEventInfo;
+    
+    public record ConferenceInfo(string Speaker, string Topic):IEventInfo;
+    
+    public record OnlineInfo(string Url):IEventInfo;
 
     
 }

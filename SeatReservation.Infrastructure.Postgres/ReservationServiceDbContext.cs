@@ -22,7 +22,5 @@ public class ReservationServiceDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReservationServiceDbContext).Assembly);
     }
-
-
     
 }

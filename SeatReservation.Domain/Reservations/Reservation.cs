@@ -1,18 +1,19 @@
 ﻿using CSharpFunctionalExtensions;
 using SeatReservation.Domain.Events;
+using SeatReservation.Domain.Venue;
 
 namespace SeatReservation.Domain.Reservation;
 
 public record ReservationId(Guid Value);
 public class Reservation
 {
-    private List<ReservationSeat> _seats;
+    private List<ReservationSeat> _reservedSeats;
 
     private Reservation()
     {
         
     }
-    public Reservation(ReservationId id, EventId eventId, Guid userId, IEnumerable<Guid> seatIds)
+    public Reservation(ReservationId id, EventId eventId, Guid userId, IEnumerable<SeatId> seatIds)
     {
         Id = id;
         EventId = eventId;
@@ -24,7 +25,7 @@ public class Reservation
             .Select(seatId => new ReservationSeat(new ReservationSeatId(Guid.NewGuid()), this, seatId))
             .ToList();
 
-        _seats = reserveSeats;
+        _reservedSeats = reserveSeats;
     }
    
     public ReservationId Id { get; private set; }
@@ -37,7 +38,7 @@ public class Reservation
 
     public DateTime CreatedAt { get; private set; }
 
-    public IReadOnlyList<ReservationSeat> Seats => _seats;
+    public IReadOnlyList<ReservationSeat> ReservedSeats => _reservedSeats;
 
     
 }

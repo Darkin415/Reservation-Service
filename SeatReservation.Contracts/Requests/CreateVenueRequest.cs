@@ -1,3 +1,3 @@
 ﻿namespace SeatReservation.Application;
 
-public record CreateVenueRequest(string Name, int SeatsLimit, IEnumerable<CreateSeatRequest> Seats);
+public record CreateVenueRequest(string Name, string Prefix, int SeatsLimit, IEnumerable<CreateSeatRequest> Seats);

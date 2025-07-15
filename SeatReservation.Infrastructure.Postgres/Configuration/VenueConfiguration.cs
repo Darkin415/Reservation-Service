@@ -10,23 +10,31 @@ public class VenueConfiguration : IEntityTypeConfiguration<Venue>
     public void Configure(EntityTypeBuilder<Venue> builder)
     {
         builder.ToTable("venues");
-        builder.HasKey(v => v.Id);
+
+        builder.HasKey(v => v.Id).HasName("pk_venues");
+
         builder.Property(v => v.Id)
-            .HasConversion(v => v.Value, id => new VenueId(id));    
+            .HasConversion(v => v.Value, id => new VenueId(id))
+            .HasColumnName("venue_id");
 
-        builder.OwnsOne(v => v.VenueName, nb =>
+        builder.ComplexProperty(v => v.VenueName, nb =>
         {
-            nb.Property(v => v.Prefix)          
-            .HasMaxLength(ConstantsLength.LENGTH50)
-            .HasColumnName("prefix");
-
-            nb.Property(v => v.Name)          
-           .HasMaxLength(ConstantsLength.LENGTH500)
-           .HasColumnName("name");
-
+            nb.Property(v => v.Name)
+                .IsRequired()
+                .HasMaxLength(ConstantsLength.LENGTH50)
+                .HasColumnName("name");
+            
+            nb.Property(v =>v.Prefix)
+                .IsRequired()
+                .HasMaxLength(ConstantsLength.LENGTH50)
+                .HasColumnName("prefix");
         });
 
-        builder.Navigation(v => v.VenueName).IsRequired(false);
+        builder.HasMany(v => v.Seats)
+            .WithOne()
+            .HasForeignKey(s => s.VenueId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);;
 
     }
 }

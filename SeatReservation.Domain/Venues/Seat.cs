@@ -16,8 +16,8 @@ public class Seat
         SeatNumber = seatNumber;  
     }
     public SeatId Id { get;  set; }
-
-    public Venue Venue { get;  set; } = null!;
+    
+    public VenueId VenueId { get;  set; } 
 
     public int RowNumber { get; set; }
 

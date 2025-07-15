@@ -9,13 +9,31 @@ public class ReservationSeatConfiguration : IEntityTypeConfiguration<Reservation
 {
     public void Configure(EntityTypeBuilder<ReservationSeat> builder)
     {
-        builder.ToTable("seats");
+        builder.ToTable("reservation_seats");
 
         builder.HasKey(v => v.Id);
 
         builder.Property(v => v.Id)
-            .HasConversion(v => v.Value, id => new ReservationSeatId(id));
+            .HasConversion(v => v.Value, id => new ReservationSeatId(id))
+            .HasColumnName("reservation_seats_id");
+        
+        builder.Property(v => v.SeatId)
+            .HasConversion(v => v.Value, id => new SeatId(id))
+            .HasColumnName("seat_id");
+        
+        builder.HasOne(rs => rs.Reservation)
+            .WithMany(r => r.ReservedSeats)
+            .HasForeignKey("reservation_id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.HasOne<Seat>()
+            .WithMany()
+            .HasForeignKey(rs => rs.SeatId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.Property(rs => rs.SeatId).HasColumnName("seat_id");
 
     }
 }
-

@@ -13,19 +13,22 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(v => v.Id);
 
         builder.Property(v => v.Id)
-            .HasColumnName("reservation_seats_id");
+            .HasColumnName("user_id");
 
-        builder.OwnsMany(u => u.Socials, sb =>
+        builder.OwnsOne(u => u.Details, db =>
         {
-            sb.ToJson("social");
-            sb.Property(u => u.Link)
+            db.ToJson("details");
+            db.OwnsMany(d => d.Social, sb =>
+            {
+                sb.Property(u => u.Name).IsRequired().HasMaxLength(ConstantsLength.LENGTH500).HasColumnName("name");
+                sb.Property(u => u.Link).IsRequired().HasMaxLength(ConstantsLength.LENGTH500).HasColumnName("link");
+            });
+            
+            db.Property(u => u.Description)
                 .IsRequired()
                 .HasMaxLength(ConstantsLength.LENGTH500)
-                .HasColumnName("link");
-            sb.Property(u => u.Name)
-                .IsRequired()
-                .HasMaxLength(ConstantsLength.LENGTH500)
-                .HasColumnName("name");
+                .HasColumnName("description");
+
         });
 
 
