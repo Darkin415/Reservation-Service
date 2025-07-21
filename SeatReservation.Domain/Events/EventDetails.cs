@@ -1,4 +1,8 @@
-﻿namespace SeatReservation.Domain.Events;
+﻿using CSharpFunctionalExtensions;
+using SeatReservation.Domain.Reservations;
+using SeatReservation.Domain.Venues;
+
+namespace SeatReservation.Domain.Events;
 
 public record EventDetailsId(Guid Value);
 public class EventDetails
@@ -7,10 +11,9 @@ public class EventDetails
     {
         
     }
-    public EventDetails(EventDetailsId eventDetailsId, EventId eventId, int capacity, string description)
+    public EventDetails(EventDetailsId id, int capacity, string description)
     {
-        Id = eventDetailsId;
-        EventId = eventId;
+        Id = id;
         Capacity = capacity;
         Description = description;
     }
@@ -22,6 +25,15 @@ public class EventDetails
     public int Capacity { get;  set; }
 
     public string Description { get;  set; } 
-
-
+     
+    
+    public static Result<EventDetails, Error> Create(
+        EventDetailsId id, int capacity, string description)
+    {
+        
+        return new EventDetails(id, capacity, description);
+    }
 }
+    
+
+
