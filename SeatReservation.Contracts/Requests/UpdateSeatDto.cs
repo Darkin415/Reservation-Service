@@ -1,3 +1,3 @@
 ﻿namespace SeatReservation.Contracts.Requests;
 
-public record UpdateSeatRequest(int RowNumber, int SeatNumber);
+public record UpdateSeatDto(int RowNumber, int SeatNumber);

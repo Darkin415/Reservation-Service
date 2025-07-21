@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SeatReservation.Domain.Events;
-using SeatReservation.Domain.Reservation;
+using SeatReservation.Domain.Reservations;
 
 namespace SeatReservation.Infrastructure.Postgres.Configuration;
 

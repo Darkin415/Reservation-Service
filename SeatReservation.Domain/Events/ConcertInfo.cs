@@ -9,3 +9,8 @@ public class ConcertInfo : Event.IEventInfo
         Performer = performer;
     }
 }
+
+public record OnlineInfo(string Url) : Event.IEventInfo
+{
+    public override string ToString() => $"Online:{Url}";
+}

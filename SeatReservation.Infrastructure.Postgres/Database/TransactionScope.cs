@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
+using SeatReservation.Application.Database;
 using SeatReservation.Domain;
 
 namespace SeatReservation.Infrastructure.Postgres.Database;

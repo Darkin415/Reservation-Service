@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace SeatReservation.Domain.Venue;
+namespace SeatReservation.Domain.Venues;
 
 public record VenueName
 {
@@ -26,5 +26,20 @@ public record VenueName
             return Error.Validation("venue.name", "Venue name is too long");
 
         return new VenueName(prefix, name);
+    }
+    
+    public static Result<VenueName, Error> CreateWithoutPrefix(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return Error.Validation("venue.name", "Venue name cannot be empty or whitespace");
+        }
+    
+        if (name.Length > ConstantsLength.LENGTH500)
+        {
+            return Error.Validation("venue.name", "Venue name is too long");
+        }
+    
+        return new VenueName("", name);
     }
 }

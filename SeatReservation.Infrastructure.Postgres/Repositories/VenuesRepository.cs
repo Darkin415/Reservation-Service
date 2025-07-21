@@ -1,15 +1,16 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using SeatReservation.Application.Database;
+using SeatReservation.Application.Venues;
 using SeatReservation.Domain;
 using SeatReservation.Domain.Venues;
 
 namespace SeatReservation.Infrastructure.Postgres.Repositories;
 
-public class EfCoreVenuesRepository : IVenuesRepository
+public class VenuesRepository : IVenuesRepository
 {
     private readonly ReservationServiceDbContext _dbContext;
-    public EfCoreVenuesRepository(ReservationServiceDbContext dbContext)
+    public VenuesRepository(ReservationServiceDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -25,6 +26,9 @@ public class EfCoreVenuesRepository : IVenuesRepository
 
     public async Task<Result<Guid, Error>> UpdateVenueName(VenueId venueId, VenueName venueName, CancellationToken cancellationToken)
     {
+        // _dbContext.Database.ExecuteSqlAsync($"UPDATE venues SET name = {venueName.Name} WHERE id = {venueId.Value}",
+        //     cancellationToken); 
+        
         await _dbContext
             .Venues
             .Where(v => v.Id == venueId)
@@ -53,10 +57,7 @@ public class EfCoreVenuesRepository : IVenuesRepository
         return UnitResult.Success<Error>();
     }
 
-    public async Task Save()
-    {
-        await _dbContext.SaveChangesAsync();
-    }
+ 
     
     public async Task<Result<Venue, Error>> GetVenueById
         (VenueId id, CancellationToken cancellationToken)
@@ -102,8 +103,7 @@ public class EfCoreVenuesRepository : IVenuesRepository
     {
         await _dbContext.Seats.Where(s => s.Venue.Id == venueId)
             .ExecuteDeleteAsync(cancellationToken);
-            
-
+        
         return UnitResult.Success<Error>();
     }
 }

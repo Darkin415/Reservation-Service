@@ -4,7 +4,7 @@ using SeatReservation.Contracts.Requests;
 using SeatReservation.Domain;
 using SeatReservation.Domain.Venues;
 
-namespace SeatReservation.Application;
+namespace SeatReservation.Application.Venues;
 
 public class CreateVenueHandler
 {

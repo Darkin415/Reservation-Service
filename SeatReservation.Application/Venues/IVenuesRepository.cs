@@ -1,9 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using SeatReservation.Contracts.Requests;
 using SeatReservation.Domain;
 using SeatReservation.Domain.Venues;
 
-namespace SeatReservation.Application.Database;
+namespace SeatReservation.Application.Venues;
 
 public interface IVenuesRepository
 {

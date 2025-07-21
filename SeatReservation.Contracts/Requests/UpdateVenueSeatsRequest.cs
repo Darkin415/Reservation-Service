@@ -1,3 +1,3 @@
-﻿namespace SeatReservation.Application.Venues;
+﻿namespace SeatReservation.Contracts.Requests;
 
-public record UpdateVenueSeatsRequest(Guid VenueId, IEnumerable<UpdateSeatRequest> Seats);
+public record UpdateVenueSeatsRequest(Guid VenueId, IEnumerable<UpdateSeatDto> Seats);

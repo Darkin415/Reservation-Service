@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SeatReservation.Domain.Reservation;
-using SeatReservation.Domain.Venue;
+using SeatReservation.Domain.Reservations;
+using SeatReservation.Domain.Venues;
 
 namespace SeatReservation.Infrastructure.Postgres.Configuration;
 
@@ -34,6 +34,8 @@ public class ReservationSeatConfiguration : IEntityTypeConfiguration<Reservation
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.Property(rs => rs.SeatId).HasColumnName("seat_id");
+        
+        
 
     }
 }

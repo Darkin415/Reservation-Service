@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SeatReservation.Domain;
-using SeatReservation.Domain.Venue;
+using SeatReservation.Domain.Venues;
 
 namespace SeatReservation.Infrastructure.Postgres.Configuration;
 
@@ -31,10 +31,12 @@ public class VenueConfiguration : IEntityTypeConfiguration<Venue>
         });
 
         builder.HasMany(v => v.Seats)
-            .WithOne()
+            .WithOne(s => s.Venue)
             .HasForeignKey(s => s.VenueId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);;
+        
+        
 
     }
 }

@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using SeatReservation.Domain;
 
-namespace SeatReservation.Infrastructure.Postgres.Database;
+namespace SeatReservation.Application.Database;
 
 public interface ITransactionScope : IDisposable
 {

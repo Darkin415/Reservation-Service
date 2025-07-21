@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using SeatReservation.Domain.Events;
-using SeatReservation.Domain.Venue;
+using SeatReservation.Domain.Venues;
 
-namespace SeatReservation.Domain.Reservation;
+namespace SeatReservation.Domain.Reservations;
 
 public record ReservationId(Guid Value);
 public class Reservation
@@ -40,5 +40,35 @@ public class Reservation
 
     public IReadOnlyList<ReservationSeat> ReservedSeats => _reservedSeats;
 
-    
+    public static Result<Reservation, Error> Create(
+        EventId eventId,
+        Guid userId,
+        IEnumerable<Guid> seatIds)
+    {
+        if (eventId.Value == Guid.Empty)
+        {
+            return Error.Validation("reservation.eventId", "Event ID cannot be empty");
+        }
+
+        if (userId == Guid.Empty)
+        {
+            return Error.Validation("reservation.userId", "User ID cannot be empty");
+        }
+
+        var seatIdsList = seatIds?
+            .Select(seatGuid => new SeatId(seatGuid))  
+            .ToList() ?? [];
+
+        if (seatIdsList.Count == 0)
+        {
+            return Error.Validation("reservation.seats", "At least one seat must be selected");
+        }
+
+        if (seatIdsList.Any(seatId => seatId.Value == Guid.Empty))
+        {
+            return Error.Validation("reservation.seats", "Seat IDs cannot be empty");
+        }
+
+        return new Reservation(new ReservationId(Guid.NewGuid()), eventId, userId, seatIdsList);
+    }
 }

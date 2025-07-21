@@ -1,6 +1,6 @@
-﻿using SeatReservation.Domain.Venue;
+﻿using SeatReservation.Domain.Venues;
 
-namespace SeatReservation.Domain.Reservation;
+namespace SeatReservation.Domain.Reservations;
 
 public record ReservationSeatId(Guid Value);
 public class ReservationSeat

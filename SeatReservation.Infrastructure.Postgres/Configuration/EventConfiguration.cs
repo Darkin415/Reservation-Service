@@ -2,8 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeatReservation.Domain.Events;
-using SeatReservation.Domain.Venue;
+using SeatReservation.Domain.Venues;
 using SeatReservation.Infrastructure.Postgres.Converters;
+
 
 namespace SeatReservation.Infrastructure.Postgres.Configuration;
 
@@ -27,9 +28,12 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.Property(e => e.Type)
             .HasConversion<string>();
 
-        builder.Property(e => e.Info)
-            .HasConversion(new EventInfoConverter());
+        builder.Property(e => e.Info);
 
+        builder.Property(e => e.Info)
+            .HasConversion(new EventInfoConverter())
+            .HasColumnName("info")
+            .IsRequired(false);
 
 
 

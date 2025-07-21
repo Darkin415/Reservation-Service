@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SeatReservation.Application.Events;
 using SeatReservation.Application.Reservations;
 using SeatReservation.Contracts.Requests;
 
 namespace SeatReservationService.Controllers;
 
 [ApiController]
-[Route("api/reservations")]
-public class ReservationsController : ControllerBase
+[Route("api/events")]
+public class EventsController : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Reserve(
-        [FromBody] ReserveRequest request,
-        [FromServices] ReserveHandler handler,
+    public async Task<IActionResult> Add(
+        [FromBody] CreateEventRequest request,
+        [FromServices] CreateEventHandler handler,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(request, cancellationToken);

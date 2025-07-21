@@ -3,9 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 
-namespace SeatReservation.Infrastructure.Postgres.Repositories;
+namespace SeatReservation.Infrastructure.Postgres.Database;
 
-public class NgpSqlConnectionFactory : IDisposable
+public class NgpSqlConnectionFactory : IDisposable, IAsyncDisposable, IDbConnectionFactory
 {
     private readonly NpgsqlDataSource _dataSource;
 
@@ -17,10 +17,12 @@ public class NgpSqlConnectionFactory : IDisposable
         
         _dataSource = dataSourceBuilder.Build();
     }
-    public async Task<IDbConnection> CreateConnectionAsync()
+    public async Task<IDbConnection> CreateConnectionAsync(CancellationToken cancellationToken = default)
     {
-        return await _dataSource.OpenConnectionAsync();
+        return await _dataSource.OpenConnectionAsync(cancellationToken);
     }
+
+    
 
     private ILoggerFactory CreateLoggerFactory() =>
         LoggerFactory.Create(builder => { builder.AddConsole(); });
